@@ -14,11 +14,15 @@ export class UserService {
   ): Promise<UserResource[]> {
     const resources = await this.db.resourceSharing.findMany({
       where: {
-        user_id: userId,
+        OR: [
+          { user_id: userId },
+          { resource: { type: $Enums.ResourceType.Global } },
+        ],
       },
       skip: (page - 1) * limit,
       take: limit,
     });
+    
     return resources.map(
       ({ resource_id: resourceId, access_type: accessType }) => ({
         resourceId,
