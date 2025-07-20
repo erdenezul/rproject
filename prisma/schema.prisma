@@ -21,9 +21,10 @@ model User {
 }
 
 model Group {
-  id    String            @id @default(cuid())
-  name  String
-  users GroupMembership[]
+  id            String            @id @default(cuid())
+  name          String
+  users         GroupMembership[]
+  groupAccesses GroupAccess[]
 }
 
 model GroupMembership {
@@ -37,14 +38,26 @@ model GroupMembership {
 }
 
 model Resource {
-  id              String            @id @default(cuid())
-  name            String
-  ResourceSharing ResourceSharing[]
+  id               String            @id @default(cuid())
+  name             String
+  resourceSharings ResourceSharing[]
+  groupAccesses    GroupAccess[]
 }
 
 enum AccessType {
   Direct
   Group
+}
+
+model GroupAccess {
+  id       String @id @default(cuid())
+  group_id String
+  group    Group  @relation(fields: [group_id], references: [id])
+
+  resource_id String
+  resource    Resource @relation(fields: [resource_id], references: [id])
+
+  @@map("group_access")
 }
 
 model ResourceSharing {
