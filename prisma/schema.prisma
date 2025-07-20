@@ -37,9 +37,15 @@ model GroupMembership {
   @@map("group_membership")
 }
 
+enum ResourceType {
+  Global
+  Shared
+}
+
 model Resource {
   id               String            @id @default(cuid())
   name             String
+  type             ResourceType      @default(Shared)
   resourceSharings ResourceSharing[]
   groupAccesses    GroupAccess[]
 }
