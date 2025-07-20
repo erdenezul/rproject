@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Param } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserResource } from './typedefs';
 
@@ -19,8 +19,12 @@ export class UserController {
    * 2. When user had a direct access to resource and also group access, then it should only return
    *    one entity as part of list
    */
-  async userResources(@Param('id') userId: string): Promise<UserResource[]> {
-    this.logger.log('[User resources:]', { userId });
-    return this.service.userResources(userId);
+  async userResources(
+    @Param('id') userId: string,
+    @Query('page') page = 1,
+    @Query('limit') limit = 20,
+  ): Promise<UserResource[]> {
+    this.logger.log('[User resources:]', { userId, page, limit });
+    return this.service.userResources(userId, page, limit);
   }
 }
