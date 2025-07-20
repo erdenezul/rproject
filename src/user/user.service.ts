@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserResource, UserWithResourceCount } from './typedefs';
 import { PrismaService } from '../prisma/prisma.service';
+import { $Enums } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -35,6 +36,9 @@ export class UserService {
     page: number,
     limit: number,
   ): Promise<UserWithResourceCount[]> {
+    const globalResourceCount = await this.db.resource.count({
+      where: { type: $Enums.ResourceType.Global },
+    });
     const usersWithResourceCount = await this.db.resourceSharing.groupBy({
       by: ['user_id'],
       _count: {
@@ -51,7 +55,7 @@ export class UserService {
 
     return usersWithResourceCount.map(
       ({ user_id: userId, _count: { resource_id: count } }) => ({
-        count,
+        count: count + globalResourceCount,
         userId,
       }),
     );
