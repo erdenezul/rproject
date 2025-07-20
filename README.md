@@ -1,3 +1,80 @@
+# Resource Sharing System
+
+## Code submission
+
+### 📚 Context
+
+#### Things need to consider to run application
+1. 💡 I've used .env file to use database connection string
+```
+DATABASE_URL="postgres://user:password@localhost:5432/resource_sharing"
+```
+2. I've added some pre-seed data, to have this data:
+```
+npx prisma seed
+```
+would do the trick.
+
+
+### ⏳ Time Constraints and Trade-offs
+
+Given the limited time available, I had to make several trade-offs in the implementation. While some features were left out, I focused on clearly articulating my thought process and design decisions.
+
+##### ✅ What I Focused On
+1.	Clear Documentation for Senior-Level Evaluation
+  I invested time in writing detailed explanations in the `Problem Modelling`](/docs/problem-modelling.md) and `Architectural Decision Record` documents. As a candidate for a Senior Engineer role, I believe demonstrating strong documentation and architectural reasoning is just as important as code. 
+  
+  > Please visit ADRs directory
+  
+2.	Structured Problem Modelling using BDD/TDD Techniques
+  In [`Problem Modelling`](/docs/problem-modelling.md), I used Gherkin syntax from Behavior-Driven Development (BDD) to define use cases and edge cases. This allowed me to approach the problem from a test-first mindset and outline system behavior systematically.
+
+
+#### ⚠️ What I Deprioritized
+1.	Unit Tests
+I chose to skip writing unit tests due to time constraints. In my experience, unit tests often fail to catch meaningful bugs in complex access control logic—these typically surface during acceptance or integration testing.
+
+2.	Group Grant Access Endpoint
+  I didn’t implement the endpoint responsible for granting a group access to resources. This is a crucial piece since the bipartite graph logic requires creating edges between all group members and the target resources. However, I discussed the design for this in detail in the Problem Modelling document.
+3.	Group Revoke Access Endpoint
+  Similarly, I left out the revoke access logic for groups, but again, the rationale and expected behavior are documented in Problem Modelling.
+4.	GET /resources/with-user-count Endpoint
+  This was deprioritized due to time constraints. I intended to implement a precomputed approach for this as well, but did not have time to do so.
+
+
+#### 🚀 Future Improvements
+1.	Acceptance Tests Based on Gherkin Scenarios
+  Since the acceptance criteria are already defined in Gherkin format, a logical next step would be to implement end-to-end acceptance tests for core flows like:
+	•	Adding a user
+	•	Granting direct access
+	•	Adding users to groups
+	•	Group-based access propagation
+2.	Implement Grant/Revoke Logic for Groups
+    Completing the logic for group access control would provide full coverage for the bipartite access graph and ensure consistency in access propagation and revocation.
+3.	Database Profiling and Optimization
+    It would be beneficial to run query profiling and indexing analysis on key access queries to ensure they scale efficiently. This could be especially important for high-volume user-resource relationships.
+
+#### Things what I did
+
+1. I've tried to explain my thought process as much as possible in `Problem Modelling` and `Architectural Decision Record` since I am `a candidate for Senior Engineer` role, it would make much more sense to show a skill of documentation
+2. In [`Problem Modelling`](../docs//problem-modelling.md), I've used `Gherkin` syntax from `Behavior Driven Development` to state all the cases and tried to identify edge cases using TDD, BDD techniques
+
+#### Things what I have ignored
+
+1. Unit tests are ignored which could be time consuming and even meaningless I've seen most of the bugs or edge cases 
+   didn't detected in unit tests but later discovered acceptance tests
+2. Group grant access endpoint were not specified which seemed crucial to me since Bipartite Graph logic
+   involves adding all edges for group users. But I've explained this in [`Problem Modelling`](../docs//problem-modelling.md)
+3. Group provoke access endpoint were also not specified but seemed important. Also explained in [`Problem Modelling`](../docs//problem-modelling.md)
+4. `GET /resources/with-user-count` is ignored because I've also wanted to have a precomputed approach and run out of time. 
+
+#### Future Improvements
+
+1. Since I already have `Gherkin style` acceptance criterias in problem modelling, it would be nice to write `Acceptance tests` to actually adding user, granting access, adding to group (and so on)
+2. Since I've ignored grant/provoke access logic due time constraint, it would be nice to implement to have full logic
+3. It would have been nice to add some query profiler analysis to further improve database indexing
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -21,6 +98,7 @@
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
 
 ## Description
 
