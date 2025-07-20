@@ -1,4 +1,4 @@
 export interface UserResource {
-  resourceId: string
-  accessType: string
+  resourceId: string;
+  accessType: string;
 }
