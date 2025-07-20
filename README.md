@@ -15,17 +15,22 @@ npx prisma seed
 ```
 would do the trick.
 
-
 ### ⏳ Time Constraints and Trade-offs
 
 Given the limited time available, I had to make several trade-offs in the implementation. While some features were left out, I focused on clearly articulating my thought process and design decisions.
+
+#### ⏱️ Time Management
+
+1.	2 hours – Spent designing the precomputed access approach and thoroughly documenting it in the Problem Modelling.
+2.	1 hour – Focused on data modeling and preparing meaningful seed data to support development and testing.
+3.	2 hours – Implemented the core logic and performed documentation polishing to ensure clarity and completeness.
 
 ##### ✅ What I Focused On
 1.	Clear Documentation for Senior-Level Evaluation
   I invested time in writing detailed explanations in the `Problem Modelling`](/docs/problem-modelling.md) and `Architectural Decision Record` documents. As a candidate for a Senior Engineer role, I believe demonstrating strong documentation and architectural reasoning is just as important as code. 
   
   > Please visit ADRs directory
-  
+
 2.	Structured Problem Modelling using BDD/TDD Techniques
   In [`Problem Modelling`](/docs/problem-modelling.md), I used Gherkin syntax from Behavior-Driven Development (BDD) to define use cases and edge cases. This allowed me to approach the problem from a test-first mindset and outline system behavior systematically.
 
