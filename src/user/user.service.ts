@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { UserResource } from './typedefs';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UserService {
-  async userResources(userId: string): Promise<UserResource[]> {
+  constructor(private readonly db: PrismaService) {}
+
+  async userResources(
+    userId: string,
+    page: number,
+    limit: number,
+  ): Promise<UserResource[]> {
     return [];
   }
 }
