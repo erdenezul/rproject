@@ -2,13 +2,13 @@ import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserResource } from './typedefs';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   private readonly logger = new Logger(UserController.name);
 
   constructor(private readonly service: UserService) {}
 
-  @Get('user/:id/resources')
+  @Get(':id/resources')
   /**
    * Return all resources that belong to user
    * @keep_in_mind
@@ -26,5 +26,13 @@ export class UserController {
   ): Promise<UserResource[]> {
     this.logger.log('[User resources:]', { userId, page, limit });
     return this.service.userResources(userId, page, limit);
+  }
+
+  @Get('/with-resource-count')
+  /**
+   * Returns a list of users and how many resources each has access to
+   */
+  async resourceCount(@Query('page') page = 1, @Query('limit') limit = 20) {
+    return this.service.resourceCount(page, limit);
   }
 }
