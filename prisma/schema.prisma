@@ -57,4 +57,7 @@ model ResourceSharing {
   user    User   @relation(fields: [user_id], references: [id])
 
   access_type AccessType
+
+  // The idea is to have only one edge between user and resource
+  @@unique([user_id, resource_id])
 }
