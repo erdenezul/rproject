@@ -11,6 +11,18 @@ export class UserService {
     page: number,
     limit: number,
   ): Promise<UserResource[]> {
-    return [];
+    const resources = await this.db.resourceSharing.findMany({
+      where: {
+        user_id: userId,
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    return resources.map(
+      ({ resource_id: resourceId, access_type: accessType }) => ({
+        resourceId,
+        accessType,
+      }),
+    );
   }
 }
